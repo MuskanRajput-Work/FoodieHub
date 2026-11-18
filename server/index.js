@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -9,7 +10,7 @@ app.use(express.json());
 
 // Connect to MongoDB (database name: foodiehub, created automatically)
 mongoose
-  .connect('mongodb://127.0.0.1:27017/foodiehub')
+  .connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log('MongoDB connection error:', err.message));
 

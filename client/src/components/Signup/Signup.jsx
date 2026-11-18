@@ -1,3 +1,4 @@
+import { API } from '../../config.js';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../Login/Login.css';
@@ -27,7 +28,7 @@ function SignUp() {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/signup', {
+      const res = await fetch(`${API}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

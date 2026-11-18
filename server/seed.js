@@ -1,7 +1,19 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const { Restaurant, Recipe } = require('./catalog');
 
 const restaurants = [
+    {
+    name: 'Sattvik Thali', cuisine: 'Indian', emoji: '🍽️', rating: 4.5,
+    deliveryTime: '25-35 min', offer: '₹100 OFF above ₹399',
+    description: 'Pure vegetarian thalis and Indian sweets.',
+    menu: [
+      { name: 'Veg Thali', description: 'Dal, sabzi, roti, rice and sweet', price: 240, veg: true },
+      { name: 'Paneer Butter Masala', description: 'Rich tomato gravy', price: 260, veg: true },
+      { name: 'Gulab Jamun', description: 'Warm syrupy dessert', price: 90, veg: true },
+      { name: 'Masala Chai', description: 'Spiced milk tea', price: 40, veg: true },
+    ],
+  },
   {
     name: 'Spice Route', cuisine: 'Indian', emoji: '🍛', rating: 4.5, deliveryTime: '30-40 min',
     description: 'North Indian classics from a clay oven.',
@@ -109,7 +121,7 @@ const recipes = [
 ];
 
 mongoose
-  .connect('mongodb://127.0.0.1:27017/foodiehub')
+  .connect(process.env.MONGO_URI)
   .then(async () => {
     await Restaurant.deleteMany({});
     await Recipe.deleteMany({});

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import Navbar from '../Navbar.jsx';
+import '../Food.css';
 
-const API = 'http://localhost:5000/api';
+import { API } from '../../config.js';
 
 function RestaurantMenu() {
   const { id } = useParams();
@@ -20,6 +22,7 @@ function RestaurantMenu() {
 
   return (
     <div className="food-page">
+      <Navbar />
       <section className="section">
         <Link to="/restaurants" className="back-link">← Back to restaurants</Link>
 
@@ -33,7 +36,9 @@ function RestaurantMenu() {
               <div>
                 <h1 className="page-title">{restaurant.name}</h1>
                 <p className="muted">{restaurant.description}</p>
-                <p className="meta">{restaurant.cuisine} · ⭐ {restaurant.rating} · {restaurant.deliveryTime}</p>
+                <p className="meta">
+                  {restaurant.cuisine} · ⭐ {restaurant.rating} · {restaurant.deliveryTime}
+                </p>
               </div>
             </div>
 
