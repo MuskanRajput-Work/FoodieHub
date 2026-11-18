@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/Login/Login.jsx'
-import SignUp from './components/SignUp/SignUp.jsx'
+import SignUp from './components/Signup/Signup.jsx'
 import Home from './components/Home/Home.jsx'
 import RestaurantMenu from './components/Restaurants/RestaurantMenu.jsx'
 import Protected from './components/Protected.jsx'
