@@ -1,10 +1,9 @@
+import { API } from '../../config.js';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar, { useCity, CITIES } from '../Navbar.jsx';
 import Footer from '../Footer.jsx';
 import '../Food.css';
-
-const API = 'http://localhost:5000/api';
 
 const DISHES = [
   { label: 'Biryani', emoji: '🍛', term: 'biryani' },
