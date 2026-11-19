@@ -1,136 +1,102 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const { Restaurant, Recipe } = require('./catalog');
+const { Restaurant } = require('./catalog');
+
+const items = (list) =>
+  list.map(([name, description, price, veg]) => ({ name, description, price, veg }));
 
 const restaurants = [
-    {
-    name: 'Sattvik Thali', cuisine: 'Indian', emoji: '🍽️', rating: 4.5,
-    deliveryTime: '25-35 min', offer: '₹100 OFF above ₹399',
-    description: 'Pure vegetarian thalis and Indian sweets.',
-    menu: [
-      { name: 'Veg Thali', description: 'Dal, sabzi, roti, rice and sweet', price: 240, veg: true },
-      { name: 'Paneer Butter Masala', description: 'Rich tomato gravy', price: 260, veg: true },
-      { name: 'Gulab Jamun', description: 'Warm syrupy dessert', price: 90, veg: true },
-      { name: 'Masala Chai', description: 'Spiced milk tea', price: 40, veg: true },
-    ],
-  },
-  {
-    name: 'Spice Route', cuisine: 'Indian', emoji: '🍛', rating: 4.5, deliveryTime: '30-40 min',
-    description: 'North Indian classics from a clay oven.',
-    menu: [
-      { name: 'Butter Chicken', description: 'Creamy tomato gravy', price: 320, veg: false },
-      { name: 'Paneer Tikka', description: 'Char-grilled cottage cheese', price: 260, veg: true },
-      { name: 'Dal Makhani', description: 'Slow-cooked black lentils', price: 220, veg: true },
-      { name: 'Garlic Naan', description: 'Fresh from the tandoor', price: 60, veg: true },
-      { name: 'Hyderabadi Biryani', description: 'Fragrant rice with spices', price: 340, veg: false },
-    ],
-  },
-  {
-    name: 'Little Italy', cuisine: 'Italian', emoji: '🍝', rating: 4.4, deliveryTime: '35-45 min',
-    description: 'Pizza and pasta made the traditional way.',
-    menu: [
-      { name: 'Margherita Pizza', description: 'Tomato, mozzarella, basil', price: 280, veg: true },
-      { name: 'Penne Arrabbiata', description: 'Spicy tomato sauce', price: 260, veg: true },
-      { name: 'Lasagna', description: 'Baked beef and cheese layers', price: 340, veg: false },
-      { name: 'Tiramisu', description: 'Coffee-soaked dessert', price: 180, veg: true },
-    ],
-  },
-  {
-    name: 'Dragon Wok', cuisine: 'Chinese', emoji: '🥡', rating: 4.2, deliveryTime: '25-35 min',
-    description: 'Wok-fired noodles, rice and starters.',
-    menu: [
-      { name: 'Veg Hakka Noodles', description: 'Stir-fried with vegetables', price: 200, veg: true },
-      { name: 'Chicken Manchurian', description: 'Crispy chicken in tangy sauce', price: 280, veg: false },
-      { name: 'Veg Spring Rolls', description: 'Crunchy and golden', price: 150, veg: true },
-      { name: 'Hot & Sour Soup', description: 'Peppery and warming', price: 130, veg: true },
-    ],
-  },
-  {
-    name: 'Taco Fiesta', cuisine: 'Mexican', emoji: '🌮', rating: 4.3, deliveryTime: '30-40 min',
-    description: 'Street-style tacos, bowls and snacks.',
-    menu: [
-      { name: 'Chicken Tacos', description: 'Three soft tacos with salsa', price: 220, veg: false },
-      { name: 'Veg Burrito Bowl', description: 'Rice, beans, corn, guacamole', price: 240, veg: true },
-      { name: 'Nachos with Salsa', description: 'Crisp chips and cheese', price: 180, veg: true },
-      { name: 'Churros', description: 'Cinnamon sugar with chocolate dip', price: 140, veg: true },
-    ],
-  },
-  {
-    name: 'Sakura Sushi', cuisine: 'Japanese', emoji: '🍣', rating: 4.6, deliveryTime: '40-50 min',
-    description: 'Fresh sushi, ramen and Japanese comfort food.',
-    menu: [
-      { name: 'Salmon Nigiri', description: 'Six pieces', price: 380, veg: false },
-      { name: 'Veg Maki Roll', description: 'Cucumber and avocado', price: 260, veg: true },
-      { name: 'Chicken Ramen', description: 'Rich broth with noodles', price: 360, veg: false },
-      { name: 'Miso Soup', description: 'Tofu and seaweed', price: 120, veg: true },
-    ],
-  },
-  {
-    name: 'Bangkok Street', cuisine: 'Thai', emoji: '🍜', rating: 4.4, deliveryTime: '30-40 min',
-    description: 'Sweet, sour and spicy Thai favourites.',
-    menu: [
-      { name: 'Pad Thai', description: 'Rice noodles with peanuts', price: 290, veg: true },
-      { name: 'Green Curry', description: 'Coconut curry with vegetables', price: 310, veg: true },
-      { name: 'Tom Yum Soup', description: 'Hot and sour broth', price: 190, veg: false },
-      { name: 'Mango Sticky Rice', description: 'Sweet coconut dessert', price: 200, veg: true },
-    ],
-  },
+  { name: 'Tandoor Tales', cuisine: 'North Indian', emoji: '🍛', image: 'tandoor-tales.jpg', area: 'Civil Lines', costForTwo: 600, rating: 4.4, deliveryTime: '30-35 min', offer: '20% OFF up to ₹100', description: 'Smoky tandoori kebabs, rich gravies and fresh naan.',
+    menu: items([
+      ['Butter Chicken', 'Creamy tomato gravy with tender chicken', 320, false],
+      ['Dal Makhani', 'Slow-cooked black lentils with butter', 220, true],
+      ['Paneer Tikka', 'Charred cottage cheese with mint chutney', 260, true],
+      ['Garlic Naan', 'Soft tandoor bread with garlic', 50, true],
+      ['Chicken Biryani', 'Fragrant rice layered with spiced chicken', 290, false],
+      ['Gulab Jamun', 'Warm milk dumplings in sugar syrup', 80, true],
+    ]) },
+  { name: 'Crust & Co.', cuisine: 'Italian', emoji: '🍕', image: 'crust-and-co.jpg', area: 'Rampur Garden', costForTwo: 500, rating: 4.3, deliveryTime: '25-30 min', offer: 'Free delivery', description: 'Wood-fired style pizzas and creamy pastas.',
+    menu: items([
+      ['Margherita Pizza', 'Classic tomato, mozzarella and basil', 249, true],
+      ['Farmhouse Pizza', 'Loaded with fresh vegetables and cheese', 349, true],
+      ['Pepperoni Pizza', 'Spicy pepperoni with extra cheese', 399, false],
+      ['Penne Alfredo', 'Creamy white sauce pasta', 289, true],
+      ['Garlic Bread', 'Toasted with herb butter', 129, true],
+      ['Tiramisu', 'Coffee-soaked layered dessert', 160, true],
+    ]) },
+  { name: 'Wok Express', cuisine: 'Chinese', emoji: '🥡', image: 'wok-express.jpg', area: 'Pilibhit Bypass', costForTwo: 450, rating: 4.1, deliveryTime: '30-40 min', offer: '₹75 OFF above ₹349', description: 'Indo-Chinese favourites cooked fresh on high flame.',
+    menu: items([
+      ['Veg Hakka Noodles', 'Stir-fried noodles with crunchy veggies', 179, true],
+      ['Chilli Chicken', 'Spicy battered chicken with peppers', 249, false],
+      ['Veg Manchurian', 'Crispy balls in tangy gravy', 199, true],
+      ['Schezwan Fried Rice', 'Fiery rice with schezwan sauce', 189, true],
+      ['Spring Rolls', 'Crispy rolls with sweet chilli dip', 149, true],
+      ['Hot & Sour Soup', 'Peppery tangy soup', 119, true],
+    ]) },
+  { name: 'Biryani Junction', cuisine: 'Biryani', emoji: '🍚', image: 'biryani-junction.jpg', area: 'Izzatnagar', costForTwo: 550, rating: 4.5, deliveryTime: '35-45 min', offer: '30% OFF up to ₹120', description: 'Dum-cooked biryanis sealed and served hot.',
+    menu: items([
+      ['Chicken Dum Biryani', 'Hyderabadi style, slow cooked', 280, false],
+      ['Veg Dum Biryani', 'Vegetables and saffron rice', 220, true],
+      ['Mutton Biryani', 'Tender mutton with long-grain rice', 380, false],
+      ['Chicken 65', 'Spicy fried chicken bites', 220, false],
+      ['Burani Raita', 'Garlic yoghurt dip', 40, true],
+      ['Double Ka Meetha', 'Bread pudding with rabri', 90, true],
+    ]) },
+  { name: 'Chaat Gali', cuisine: 'Street Food', emoji: '🥙', image: 'chaat-gali.jpg', area: 'Subhash Nagar', costForTwo: 250, rating: 4.2, deliveryTime: '20-25 min', offer: 'Flat ₹50 OFF', description: 'Tangy, crunchy chaat and street snacks.',
+    menu: items([
+      ['Aloo Tikki Chaat', 'Crispy potato patties with chutneys', 80, true],
+      ['Pani Puri', 'Crisp puris with spicy mint water', 60, true],
+      ['Dahi Bhalla', 'Lentil dumplings in sweet yoghurt', 90, true],
+      ['Samosa', 'Two crispy samosas with chutney', 40, true],
+      ['Chole Bhature', 'Spiced chickpeas with fluffy bread', 120, true],
+      ['Kulfi Falooda', 'Chilled kulfi with falooda', 110, true],
+    ]) },
+  { name: 'Burger Barn', cuisine: 'Fast Food', emoji: '🍔', image: 'burger-barn.jpg', area: 'Civil Lines', costForTwo: 400, rating: 4.0, deliveryTime: '20-30 min', offer: 'Buy 1 Get 1 on shakes', description: 'Juicy burgers, loaded fries and thick shakes.',
+    menu: items([
+      ['Classic Veg Burger', 'Crispy patty with fresh lettuce', 119, true],
+      ['Chicken Zinger Burger', 'Crunchy fried chicken fillet', 179, false],
+      ['Peri Peri Fries', 'Fries with spicy seasoning', 99, true],
+      ['Cheese Loaded Fries', 'Fries with melted cheese sauce', 129, true],
+      ['Chocolate Shake', 'Thick chocolate milkshake', 140, true],
+      ['Cold Coffee', 'Iced coffee with ice cream', 110, true],
+    ]) },
+  { name: 'Taco Town', cuisine: 'Mexican', emoji: '🌮', image: 'taco-town.jpg', area: 'Rampur Garden', costForTwo: 500, rating: 4.2, deliveryTime: '30-35 min', offer: '₹100 OFF above ₹499', description: 'Tacos, burrito bowls and crunchy nachos.',
+    menu: items([
+      ['Veg Tacos', 'Beans, corn and salsa in soft shells', 160, true],
+      ['Chicken Tacos', 'Grilled chicken with creamy sauce', 190, false],
+      ['Nachos with Salsa', 'Crispy chips with cheese and salsa', 150, true],
+      ['Burrito Bowl', 'Rice, beans, veggies and guacamole', 230, true],
+      ['Churros', 'Cinnamon sugar dough sticks', 120, true],
+    ]) },
+  { name: 'Tokyo Bites', cuisine: 'Japanese', emoji: '🍣', image: 'tokyo-bites.jpg', area: 'Bishop Conrad Road', costForTwo: 800, rating: 4.4, deliveryTime: '40-50 min', offer: '15% OFF', description: 'Sushi rolls, ramen and miso soup.',
+    menu: items([
+      ['Veg Sushi Roll', 'Cucumber, avocado and carrot', 280, true],
+      ['California Roll', 'Crab, cucumber and avocado', 320, false],
+      ['Veg Ramen', 'Noodle soup with mushrooms and greens', 260, true],
+      ['Miso Soup', 'Warm soybean broth with tofu', 140, true],
+    ]) },
+  { name: 'Sattvik Thali', cuisine: 'Indian', emoji: '🍽️', image: 'sattvik-thali.jpg', area: 'Subhash Nagar', costForTwo: 450, rating: 4.5, deliveryTime: '25-35 min', offer: '₹100 OFF above ₹399', description: 'Pure vegetarian thalis and Indian sweets.',
+    menu: items([
+      ['Veg Thali', 'Dal, sabzi, roti, rice and sweet', 240, true],
+      ['Paneer Butter Masala', 'Rich tomato gravy', 260, true],
+      ['Rajma Chawal', 'Kidney beans with steamed rice', 160, true],
+      ['Gulab Jamun', 'Warm syrupy dessert', 90, true],
+      ['Masala Chai', 'Spiced milk tea', 40, true],
+    ]) },
+  { name: 'Mithai Mahal', cuisine: 'Desserts', emoji: '🍰', image: 'mithai-mahal.jpg', area: 'Civil Lines', costForTwo: 350, rating: 4.3, deliveryTime: '20-30 min', offer: 'Free sweet box above ₹499', description: 'Fresh Indian sweets, cakes and desserts.',
+    menu: items([
+      ['Kaju Katli (250g)', 'Cashew fudge squares', 300, true],
+      ['Jalebi (250g)', 'Crispy spirals soaked in syrup', 100, true],
+      ['Rasmalai', 'Soft cheese discs in saffron milk', 140, true],
+      ['Motichoor Ladoo (250g)', 'Boondi ladoo with ghee', 120, true],
+      ['Rabri Falooda', 'Chilled falooda with thick rabri', 130, true],
+    ]) },
 ];
 
-const recipes = [
-  {
-    title: 'Paneer Butter Masala', cuisine: 'Indian', emoji: '🍛', time: '40 min', difficulty: 'Easy',
-    ingredients: ['250g paneer', '3 tomatoes', '2 tbsp butter', '1/2 cup cream', '1 tsp garam masala', 'Salt to taste'],
-    steps: [
-      'Blend the tomatoes into a smooth puree.',
-      'Melt butter in a pan and cook the puree with spices for 10 minutes.',
-      'Add cream and cubed paneer and simmer for 5 minutes.',
-      'Serve hot with naan or rice.',
-    ],
-  },
-  {
-    title: 'Spaghetti Aglio e Olio', cuisine: 'Italian', emoji: '🍝', time: '20 min', difficulty: 'Easy',
-    ingredients: ['200g spaghetti', '5 garlic cloves', '4 tbsp olive oil', '1 tsp chilli flakes', 'Parsley', 'Salt'],
-    steps: [
-      'Boil the spaghetti in salted water until al dente.',
-      'Gently fry sliced garlic in olive oil until golden.',
-      'Add chilli flakes and a ladle of pasta water.',
-      'Toss in the spaghetti and finish with parsley.',
-    ],
-  },
-  {
-    title: 'Veg Fried Rice', cuisine: 'Chinese', emoji: '🍚', time: '25 min', difficulty: 'Easy',
-    ingredients: ['2 cups cooked rice', 'Carrot, beans, peas', '2 tbsp soy sauce', '1 tsp vinegar', 'Spring onions', 'Pepper'],
-    steps: [
-      'Heat oil on high and stir-fry the chopped vegetables.',
-      'Add the cold cooked rice and toss well.',
-      'Season with soy sauce, vinegar and pepper.',
-      'Garnish with spring onions and serve.',
-    ],
-  },
-  {
-    title: 'Chicken Tacos', cuisine: 'Mexican', emoji: '🌮', time: '30 min', difficulty: 'Medium',
-    ingredients: ['300g chicken strips', '6 small tortillas', '1 tsp taco seasoning', 'Lettuce and tomato', 'Salsa', 'Lime'],
-    steps: [
-      'Coat the chicken with taco seasoning and cook until browned.',
-      'Warm the tortillas on a dry pan.',
-      'Fill with chicken, lettuce and tomato.',
-      'Top with salsa and a squeeze of lime.',
-    ],
-  },
-];
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(async () => {
-    await Restaurant.deleteMany({});
-    await Recipe.deleteMany({});
-    await Restaurant.insertMany(restaurants);
-    await Recipe.insertMany(recipes);
-    console.log('Seeded', restaurants.length, 'restaurants and', recipes.length, 'recipes');
-    process.exit(0);
-  })
-  .catch((err) => {
-    console.log('Seed error:', err.message);
-    process.exit(1);
-  });
+(async () => {
+  await mongoose.connect(process.env.MONGO_URI);
+  await Restaurant.deleteMany({});
+  await Restaurant.insertMany(restaurants);
+  console.log(`Seeded ${restaurants.length} restaurants`);
+  await mongoose.disconnect();
+})();

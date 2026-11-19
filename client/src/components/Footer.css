@@ -1,0 +1,9 @@
+.ft { background: #faf6f1; border-top: 1px solid #eadfd3; margin-top: 48px; padding: 40px 24px 20px; }
+.ft-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+.ft-brand { font-family: 'Playfair Display', serif; color: #7a1f2b; font-size: 28px; margin: 0 0 8px; }
+.ft-text { color: #6b5a5a; margin: 0; max-width: 320px; line-height: 1.5; }
+.ft h4 { margin: 0 0 12px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: #2b1a1a; }
+.ft a { display: block; color: #6b5a5a; text-decoration: none; margin-bottom: 8px; }
+.ft a:hover { color: #7a1f2b; }
+.ft-bottom { max-width: 1100px; margin: 28px auto 0; padding-top: 16px; border-top: 1px solid #eadfd3; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: #6b5a5a; font-size: 14px; }
+@media (max-width: 700px) { .ft-grid { grid-template-columns: 1fr 1fr; } }

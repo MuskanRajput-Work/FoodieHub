@@ -1,3 +1,4 @@
+import Photo from '../Photo.jsx';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Navbar from '../Navbar.jsx';
@@ -32,12 +33,14 @@ function RestaurantMenu() {
         {restaurant && (
           <>
             <div className="menu-head">
-              <div className="card-emoji big">{restaurant.emoji}</div>
+              <Photo file={restaurant.image} fallback={restaurant.emoji} className="menu-photo" fallbackClassName="card-emoji big" />
               <div>
                 <h1 className="page-title">{restaurant.name}</h1>
                 <p className="muted">{restaurant.description}</p>
                 <p className="meta">
                   {restaurant.cuisine} · ⭐ {restaurant.rating} · {restaurant.deliveryTime}
+                  {restaurant.area ? ` · ${restaurant.area}` : ''}
+                  {restaurant.costForTwo ? ` · ₹${restaurant.costForTwo} for two` : ''}
                 </p>
               </div>
             </div>

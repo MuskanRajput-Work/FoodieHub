@@ -1,35 +1,34 @@
 import { Link } from 'react-router-dom';
+import './Footer.css';
 
-function Footer() {
+export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-inner">
+    <footer className="ft">
+      <div className="ft-grid">
         <div>
-          <h2 className="footer-brand">FoodieHub</h2>
-          <p className="muted">Discover cuisines, restaurants, menus and recipes.</p>
-        </div>
-        <div>
-          <h4>About</h4>
-          <a href="#">Who we are</a>
-          <a href="#">Blog</a>
-          <a href="#">Contact us</a>
+          <h3 className="ft-brand">FoodieHub</h3>
+          <p className="ft-text">Discover restaurants, cuisines and menus near you, and order your favourite food.</p>
         </div>
         <div>
           <h4>Explore</h4>
           <Link to="/home">Home</Link>
           <Link to="/restaurants">Restaurants</Link>
-          <a href="#">Recipes (coming soon)</a>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <Link to="/info/about">About us</Link>
+          <Link to="/info/contact">Contact us</Link>
         </div>
         <div>
           <h4>Legal</h4>
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-          <a href="#">Security</a>
+          <Link to="/info/privacy">Privacy</Link>
+          <Link to="/info/terms">Terms</Link>
         </div>
       </div>
-      <div className="footer-bottom">© 2026 FoodieHub. All rights reserved.</div>
+      <div className="ft-bottom">
+        <span>© {new Date().getFullYear()} FoodieHub. Student project by Muskan, BCA.</span>
+        <span>Restaurants and menus shown are sample data.</span>
+      </div>
     </footer>
   );
 }
-
-export default Footer;

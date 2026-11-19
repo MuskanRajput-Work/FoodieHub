@@ -12,6 +12,9 @@ const Restaurant = mongoose.model(
     deliveryTime: String,
     description: String,
     offer: String,
+    image: String,
+    area: String,
+    costForTwo: Number,
     menu: [{ name: String, description: String, price: Number, veg: Boolean }],
   })
 );

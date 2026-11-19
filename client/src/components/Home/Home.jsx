@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import Navbar, { useCity, CITIES } from '../Navbar.jsx';
 import Footer from '../Footer.jsx';
 import '../Food.css';
+import Photo from '../Photo.jsx';
 
 const DISHES = [
-  { label: 'Biryani', emoji: '🍛', term: 'biryani' },
-  { label: 'Pizza', emoji: '🍕', term: 'pizza' },
-  { label: 'Noodles', emoji: '🍜', term: 'noodles' },
-  { label: 'Tacos', emoji: '🌮', term: 'taco' },
-  { label: 'Sushi', emoji: '🍣', term: 'sushi' },
-  { label: 'Soup', emoji: '🥣', term: 'soup' },
-  { label: 'Dessert', emoji: '🍰', term: 'dessert' },
+  { label: 'Biryani', emoji: '🍛', term: 'biryani', file: 'chicken-biryani' },
+  { label: 'Pizza', emoji: '🍕', term: 'pizza', file: 'margherita-pizza' },
+  { label: 'Noodles', emoji: '🍜', term: 'noodles', file: 'veg-hakka-noodles' },
+  { label: 'Tacos', emoji: '🌮', term: 'taco', file: 'veg-tacos' },
+  { label: 'Sushi', emoji: '🍣', term: 'sushi', file: 'veg-sushi-roll' },
+  { label: 'Soup', emoji: '🥣', term: 'soup', file: 'hot-and-sour-soup' },
+  { label: 'Dessert', emoji: '🍰', term: 'dessert', file: 'gulab-jamun' },
 ];
 
 function Home() {
@@ -154,7 +155,9 @@ function Home() {
                 className="round-item"
                 onClick={() => pickDish(d.term)}
               >
-                <span className="round round-dish">{d.emoji}</span>
+                <span className="round round-dish">
+                  <Photo file={d.file} fallback={d.emoji} className="round-photo" />
+                </span>
                 <span className="round-label">{d.label}</span>
               </button>
             ))}
@@ -166,7 +169,9 @@ function Home() {
           <div className="round-row">
             {topBrands.map((r) => (
               <Link key={r._id} to={`/restaurants/${r._id}`} className="round-item">
-                <span className="round round-brand">{r.emoji}</span>
+                <span className="round round-brand">
+                  <Photo file={r.image} fallback={r.emoji} className="round-photo" />
+                </span>
                 <span className="round-label">{r.name}</span>
                 <span className="round-sub">{r.deliveryTime}</span>
               </Link>
@@ -185,7 +190,7 @@ function Home() {
             {visible.map((r) => (
               <Link key={r._id} to={`/restaurants/${r._id}`} className="rest-card">
                 <div className="rest-img">
-                  <span className="rest-emoji">{r.emoji}</span>
+                  <Photo file={r.image} fallback={r.emoji} className="rest-photo" fallbackClassName="rest-emoji" />
                   {r.offer && <span className="offer-tag">{r.offer}</span>}
                   <span className="time-tag">{r.deliveryTime}</span>
                 </div>
@@ -196,7 +201,7 @@ function Home() {
                   </div>
                   <div className="rest-row muted">
                     <span>{r.cuisine}</span>
-                    <span>{r.menu.length} dishes</span>
+                    <span>{r.costForTwo ? `₹${r.costForTwo} for two` : `${r.menu.length} dishes`}</span>
                   </div>
                   <p className="muted small">{r.description}</p>
                 </div>

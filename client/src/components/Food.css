@@ -314,3 +314,10 @@
   .section { padding: 24px 16px; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
 }
+.photo { display: block; object-fit: cover; }
+.round-photo { width: 100%; height: 100%; border-radius: 50%; }
+.round-dish, .round-brand { overflow: hidden; }
+.rest-img { position: relative; overflow: hidden; }
+.rest-photo { position: absolute; inset: 0; width: 100%; height: 100%; }
+.offer-tag, .time-tag { z-index: 1; }
+.menu-photo { width: 120px; height: 120px; border-radius: 16px; }

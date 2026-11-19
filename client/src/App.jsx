@@ -4,6 +4,7 @@ import SignUp from './components/Signup/Signup.jsx'
 import Home from './components/Home/Home.jsx'
 import RestaurantMenu from './components/Restaurants/RestaurantMenu.jsx'
 import Protected from './components/Protected.jsx'
+import Info from './components/Info.jsx'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Route path="/home" element={<Protected><Home /></Protected>} />
       <Route path="/restaurants" element={<Protected><Home /></Protected>} />
       <Route path="/restaurants/:id" element={<Protected><RestaurantMenu /></Protected>} />
+      <Route path="/info/:topic" element={<Info />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
