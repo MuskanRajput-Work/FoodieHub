@@ -165,7 +165,7 @@ function Home() {
         </section>
 
         <section className="block">
-          <h2 className="block-title">Top brands for you</h2>
+          <h2 className="block-title">Top Restaurants for you</h2>
           <div className="round-row">
             {topBrands.map((r) => (
               <Link key={r._id} to={`/restaurants/${r._id}`} className="round-item">
