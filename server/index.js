@@ -83,5 +83,8 @@ app.post('/api/login', async (req, res) => {
 const { router: catalogRouter } = require('./catalog');
 app.use('/api', catalogRouter);
 
+const { router: orderRouter } = require('./orders');
+app.use('/api', orderRouter);
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

@@ -321,3 +321,31 @@
 .rest-photo { position: absolute; inset: 0; width: 100%; height: 100%; }
 .offer-tag, .time-tag { z-index: 1; }
 .menu-photo { width: 120px; height: 120px; border-radius: 16px; }
+.add-btn {
+  background: #fff;
+  color: #8b2635;
+  border: 1px solid #8b2635;
+  border-radius: 6px;
+  padding: 4px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.add-btn:hover { background: #8b2635; color: #fff; }
+.add-btn.big { width: 100%; padding: 12px; font-size: 16px; background: #8b2635; color: #fff; margin-top: 8px; }
+.add-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.qty { display: inline-flex; align-items: center; gap: 10px; border: 1px solid #8b2635; border-radius: 6px; padding: 2px 8px; }
+.qty button { background: none; border: none; color: #8b2635; font-size: 18px; font-weight: 700; cursor: pointer; }
+
+.cart-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  background: #8b2635; color: #fff; padding: 14px 24px; text-decoration: none;
+}
+
+.cart-box { max-width: 600px; margin: 24px auto; padding: 0 16px 90px; }
+.cart-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee; }
+.cart-total { font-size: 20px; font-weight: 700; text-align: right; }
+.cart-input { display: block; width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+.cart-error { color: #c0392b; }
+.order-card { border: 1px solid #eee; border-radius: 8px; padding: 12px 16px; margin: 12px 0; }

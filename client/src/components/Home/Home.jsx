@@ -5,6 +5,7 @@ import Navbar, { useCity, CITIES } from '../Navbar.jsx';
 import Footer from '../Footer.jsx';
 import '../Food.css';
 import Photo from '../Photo.jsx';
+import CartBar from '../CartBar.jsx';
 
 const DISHES = [
   { label: 'Biryani', emoji: '🍛', term: 'biryani', file: 'chicken-biryani' },
@@ -240,7 +241,7 @@ function Home() {
           ))}
         </section>
       </main>
-
+      <CartBar />
       <Footer />
     </div>
   );

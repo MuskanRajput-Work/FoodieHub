@@ -13,6 +13,7 @@ export default function Footer() {
           <h4>Explore</h4>
           <Link to="/home">Home</Link>
           <Link to="/restaurants">Restaurants</Link>
+          <Link to="/orders">My orders</Link>
         </div>
         <div>
           <h4>Company</h4>

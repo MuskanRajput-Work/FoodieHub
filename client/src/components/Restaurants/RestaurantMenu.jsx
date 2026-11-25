@@ -1,3 +1,5 @@
+import { useCart } from '../CartContext.jsx';
+import CartBar from '../CartBar.jsx';
 import Photo from '../Photo.jsx';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -10,6 +12,8 @@ function RestaurantMenu() {
   const { id } = useParams();
   const [restaurant, setRestaurant] = useState(null);
   const [error, setError] = useState('');
+  const { cart, add, change } = useCart();
+const qty = (name) => cart.items.find((i) => i.name === name)?.quantity || 0;
 
   useEffect(() => {
     fetch(`${API}/restaurants/${id}`)
@@ -55,12 +59,27 @@ function RestaurantMenu() {
                     <p className="muted">{item.description}</p>
                   </div>
                   <span className="price">₹{item.price}</span>
+                  {qty(item.name) === 0 ? (
+                    <button
+                      className="add-btn"
+                      onClick={() => add({ id: restaurant._id, name: restaurant.name }, item)}
+                    >
+                      ADD
+                    </button>
+                  ) : (
+                    <div className="qty">
+                      <button onClick={() => change(item.name, -1)}>−</button>
+                      <span>{qty(item.name)}</span>
+                      <button onClick={() => change(item.name, 1)}>+</button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </>
         )}
       </section>
+      <CartBar />
     </div>
   );
 }
