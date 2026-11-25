@@ -85,7 +85,7 @@ function Login() {
             </button>
           </div>
 
-          <a href="#" className="forgot-link">Forgot password?</a>
+          <Link to="/forgot-password">Forgot password?</Link>
 
           {message && <p className="form-error">{message}</p>}
 

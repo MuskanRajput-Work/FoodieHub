@@ -6,8 +6,9 @@ import Navbar from './Navbar.jsx';
 
 export default function Cart() {
   const { cart, change, clear, total } = useCart();
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
+  const saved = JSON.parse(localStorage.getItem('user') || '{}');
+  const [address, setAddress] = useState(saved.address || '');
+  const [phone, setPhone] = useState(saved.phone || '');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
@@ -51,6 +52,7 @@ export default function Cart() {
           <h2>Order placed! 🎉</h2>
           <p>Your order id: <strong>{orderId}</strong></p>
           <p>Payment: Cash on delivery</p>
+          <Link to={`/track/${orderId}`}>Track this order</Link>{' · '}
           <Link to="/orders">View my orders</Link>
           {' · '}
           <Link to="/restaurants">Order more</Link>

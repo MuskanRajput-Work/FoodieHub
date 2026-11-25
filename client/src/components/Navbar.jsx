@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import UserMenu from './UserMenu.jsx';
 export const CITIES = ['Bareilly', 'Delhi', 'Lucknow', 'Mumbai', 'Bengaluru'];
 
 export function useCity() {
@@ -52,8 +52,7 @@ function Navbar({ city, setCity, search, onSearch }) {
       </div>
 
       <div className="top-right">
-        {user && <span className="hello">Hi, {user.name}</span>}
-        <button className="logout" onClick={handleLogout}>Log out</button>
+        {user && <UserMenu user={user} onLogout={handleLogout} />}
       </div>
     </header>
   );

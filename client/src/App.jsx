@@ -7,6 +7,9 @@ import Protected from './components/Protected.jsx'
 import Info from './components/Info.jsx'
 import Cart from './components/Cart.jsx';
 import Orders from './components/Orders.jsx';
+import Track from './components/Track.jsx';
+import Profile from './components/Profile.jsx';
+import ForgotPassword from './components/ForgotPassword.jsx';
 
 export default function App() {
   return (
@@ -19,7 +22,10 @@ export default function App() {
       <Route path="/restaurants/:id" element={<Protected><RestaurantMenu /></Protected>} />
       <Route path="/info/:topic" element={<Info />} />
       <Route path="/cart" element={<Protected><Cart /></Protected>} />
-<Route path="/orders" element={<Protected><Orders /></Protected>} />
+      <Route path="/orders" element={<Protected><Orders /></Protected>} />
+      <Route path="/track/:id" element={<Protected><Track /></Protected>} />
+      <Route path="/profile" element={<Protected><Profile /></Protected>} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

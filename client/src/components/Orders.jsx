@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { STEPS, getStage } from './stage.js';
 import { useEffect, useState } from 'react';
 import { API } from '../config.js';
 import Navbar from './Navbar.jsx';
@@ -31,7 +33,8 @@ export default function Orders() {
             <strong>{o.restaurantName}</strong>
             <p>{new Date(o.createdAt).toLocaleString()}</p>
             <p>{o.items.map((i) => `${i.name} × ${i.quantity}`).join(', ')}</p>
-            <p>Total: ₹{o.total} · {o.status}</p>
+            <p>Total: ₹{o.total} · {STEPS[getStage(o.createdAt)]}</p>
+            <Link to={`/track/${o._id}`}>Track order →</Link>
           </div>
         ))}
       </section>

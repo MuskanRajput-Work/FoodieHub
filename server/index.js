@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     phone: { type: String, required: true },
+    address: { type: String, default: '' },
     password: { type: String, required: true },
   },
   { timestamps: true }
@@ -72,8 +73,98 @@ app.post('/api/login', async (req, res) => {
 
     res.json({
       message: 'Login successful',
-      user: { id: user._id, name: user.name, email: user.email },
+      user: { id: user._id, name: user.name, email: user.email, phone: user.phone, address: user.address || '' },
     });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get profile
+app.get('/api/users/:id', async (req, res) => {
+  try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid user id' });
+    }
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json({ id: user._id, name: user.name, email: user.email, phone: user.phone, address: user.address || '' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Update profile (email cannot be changed because it is the login id)
+app.put('/api/users/:id', async (req, res) => {
+  try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid user id' });
+    }
+    const { name, phone, address } = req.body;
+    if (!name || !name.trim()) return res.status(400).json({ message: 'Name is required' });
+    if (!/^\d{10}$/.test(phone || '')) return res.status(400).json({ message: 'Phone must be 10 digits' });
+
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { name: name.trim(), phone, address: (address || '').trim() },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.json({
+      message: 'Profile updated',
+      user: { id: user._id, name: user.name, email: user.email, phone: user.phone, address: user.address || '' },
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Change password (logged-in user)
+app.post('/api/change-password', async (req, res) => {
+  try {
+    const { userId, oldPassword, newPassword } = req.body;
+    if (!mongoose.isValidObjectId(userId)) {
+      return res.status(400).json({ message: 'Invalid user' });
+    }
+    if (!newPassword || newPassword.length < 6) {
+      return res.status(400).json({ message: 'New password must be at least 6 characters' });
+    }
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    const match = await bcrypt.compare(oldPassword || '', user.password);
+    if (!match) return res.status(400).json({ message: 'Current password is wrong' });
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+    res.json({ message: 'Password changed successfully' });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Forgot password: verify email + phone, then set a new password
+app.post('/api/forgot-password', async (req, res) => {
+  try {
+    const { email, phone, newPassword } = req.body;
+    if (!email || !phone || !newPassword) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: 'New password must be at least 6 characters' });
+    }
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user || user.phone !== phone.trim()) {
+      return res.status(400).json({ message: 'Email and phone number do not match our records' });
+    }
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+    res.json({ message: 'Password reset successfully. You can log in now.' });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: 'Server error' });
